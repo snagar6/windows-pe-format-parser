@@ -1,0 +1,89 @@
+/*******************************************************************************
+* Copyright 2001 – 2010 Intel Corporation. All Rights Reserved.
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+* Redistributions of source code must retain the above copyright notice,
+* this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice,
+* this list of conditions and the following disclaimer in the documentation
+* and/or other materials provided with the distribution.
+* Neither the name Intel Corporation nor the names of its contributors may
+* be used to endorse or promote products derived from this software without
+* specific prior written permission.
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+* THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*******************************************************************************/
+// PE-Parse.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+
+LPCWSTR filename = L"c:\\temp\\hello_dll.dll";
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+
+    HANDLE hFile;
+    HANDLE hFileMapping;
+    LPVOID lpFileBase;
+    PIMAGE_DOS_HEADER dosHeader;
+	PIMAGE_NT_HEADERS ntHeader;
+	PIMAGE_SECTION_HEADER secHeader;
+	int i;
+
+    
+    hFile = CreateFile(filename, GENERIC_READ, FILE_SHARE_READ, NULL,
+                        OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+                    
+    if ( hFile == INVALID_HANDLE_VALUE )
+    {   printf("Couldn't open file with CreateFile()\n");
+        return 2; 
+	}
+    
+    hFileMapping = CreateFileMapping(hFile, NULL, PAGE_READONLY, 0, 0, NULL);
+    if ( hFileMapping == 0 )
+    {   CloseHandle(hFile);
+        printf("Couldn't open file mapping with CreateFileMapping()\n");
+        return 2; 
+	}
+    
+    lpFileBase = MapViewOfFile(hFileMapping, FILE_MAP_READ, 0, 0, 0);
+    if ( lpFileBase == 0 )
+    {
+        CloseHandle(hFileMapping);
+        CloseHandle(hFile);
+        printf("Couldn't map view of file with MapViewOfFile()\n");
+        return 2;
+    }
+
+    printf("Dump of file %ws\n\n", filename);
+    
+    dosHeader = (PIMAGE_DOS_HEADER)lpFileBase;
+    if ( dosHeader->e_magic == IMAGE_DOS_SIGNATURE )
+    { 
+		ntHeader = MakePtr(PIMAGE_NT_HEADERS, dosHeader, dosHeader->e_lfanew);
+		secHeader = MakePtr(PIMAGE_SECTION_HEADER, ntHeader, sizeof(*ntHeader));
+		printf("\n Num Sections = %d ", ntHeader->FileHeader.NumberOfSections);
+		for (i=0; i<ntHeader->FileHeader.NumberOfSections; i++, secHeader++) 
+		    printf("\n Sections %d, Name=%s VA=%x, Size=%d ", i, secHeader->Name, secHeader->VirtualAddress, secHeader->SizeOfRawData );
+
+		printf("\n Done "); 
+	}
+
+	UnmapViewOfFile(lpFileBase);
+    CloseHandle(hFileMapping);
+    CloseHandle(hFile);
+
+
+	return 0;
+}
+

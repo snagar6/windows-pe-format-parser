@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/ssg/mmd/bmp/Patmos/!svn/ver/3707/branches/ring3_poc/ring3_poc/pe-parser/PE-Parse
+END
+stdafx.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/ssg/mmd/bmp/Patmos/!svn/ver/3169/branches/ring3_poc/ring3_poc/pe-parser/PE-Parse/stdafx.h
+END
+PE-Parse.vcxproj.user
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/ssg/mmd/bmp/Patmos/!svn/ver/3169/branches/ring3_poc/ring3_poc/pe-parser/PE-Parse/PE-Parse.vcxproj.user
+END
+PE-Parse.vcxproj
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/ssg/mmd/bmp/Patmos/!svn/ver/3169/branches/ring3_poc/ring3_poc/pe-parser/PE-Parse/PE-Parse.vcxproj
+END
+targetver.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/ssg/mmd/bmp/Patmos/!svn/ver/3169/branches/ring3_poc/ring3_poc/pe-parser/PE-Parse/targetver.h
+END
+stdafx.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/ssg/mmd/bmp/Patmos/!svn/ver/3169/branches/ring3_poc/ring3_poc/pe-parser/PE-Parse/stdafx.cpp
+END
+ReadMe.txt
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/ssg/mmd/bmp/Patmos/!svn/ver/3169/branches/ring3_poc/ring3_poc/pe-parser/PE-Parse/ReadMe.txt
+END
+PE-Parse.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/ssg/mmd/bmp/Patmos/!svn/ver/3707/branches/ring3_poc/ring3_poc/pe-parser/PE-Parse/PE-Parse.cpp
+END
+PE-Parse.vcxproj.filters
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/ssg/mmd/bmp/Patmos/!svn/ver/3169/branches/ring3_poc/ring3_poc/pe-parser/PE-Parse/PE-Parse.vcxproj.filters
+END
